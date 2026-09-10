@@ -45,12 +45,17 @@ rrl.local
 - Every OU protected from accidental deletion
 - Verified nesting under *Active Directory Users and Computers*
 
+
+
+
 ## 3. User Provisioning
 
 - Created 3 users inside `_Branches > Durban > Users`
 - Set initial passwords; unchecked *User must change password at next logon* (lab convenience — would be enabled in production)
 - Left *User cannot change password* and *Password never expires* unchecked
 - Verified users appeared under the correct nested OU
+<img width="1367" height="716" alt="OU Nesting verification1" src="https://github.com/user-attachments/assets/901abbd2-495e-4920-aa1b-0f3c73767e8f" />
+
 
 ## 4. Security Groups — Centralized, Not Branch-Scoped
 
@@ -75,6 +80,9 @@ For each group:
 2. Type the username → **Check Names** → **OK**
 
 Repeated for all three groups against their respective users.
+<img width="1365" height="718" alt="User_Added_to_Groups" src="https://github.com/user-attachments/assets/074ad6dc-bda6-4842-a7ed-7d6c08536a38" />
+
+
 
 ## 6. Client Domain Join
 
@@ -84,6 +92,9 @@ Repeated for all three groups against their respective users.
 - Joined via **Settings → System → About → Domain or Workgroup → Change**, entered `rrl.local`
 - Logged in with domain credentials, restarted to apply
 - Verified by logging into the client with the domain admin account
+<img width="1365" height="712" alt="Joining Client to DC" src="https://github.com/user-attachments/assets/ed20f8c8-35e2-4c05-853c-d6de1166765f" />
+<img width="1366" height="720" alt="Joining Client to DC 2" src="https://github.com/user-attachments/assets/379e3b73-c54c-43a4-9b96-14f52c372e8d" />
+<img width="1365" height="718" alt="Client VM logged" src="https://github.com/user-attachments/assets/589869b2-0859-4893-8da4-4dd5c5b6153a" />
 
 ## 7. Delegated RDP Access via PowerShell
 
@@ -96,6 +107,9 @@ Add-LocalGroupMember -Group "Remote Desktop Users" -Member "RRL\ITSupport"
 ```
 
 Verified by logging out and back in as one of the domain users created earlier.
+<img width="1366" height="718" alt="Successful login using domain account" src="https://github.com/user-attachments/assets/17309176-d15e-4275-a90b-08de5d2a89af" />
+
+
 
 ## What This Demonstrates
 
@@ -107,9 +121,3 @@ Verified by logging out and back in as one of the domain users created earlier.
 - Basic AD-aware PowerShell (`Add-LocalGroupMember`) as an alternative to GUI administration
 - Azure VM networking fundamentals (static IP addressing, VNet/subnet alignment)
 
-## Next Steps
-
-- Link actual GPOs to the `Workstations` and `Laptops` sub-OUs
-- Add a second branch OU to prove the structure scales across locations
-- Delegate branch-level administration rights instead of using Domain Admin for all changes
-- Document a password/lockout policy per branch via fine-grained password policies
