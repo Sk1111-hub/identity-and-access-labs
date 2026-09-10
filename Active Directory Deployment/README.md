@@ -23,6 +23,8 @@ Rhino Route Logistics, a fictional logistics company with multiple branch office
 - Left DNS delegation, NetBIOS name, and default paths (database, logs, SYSVOL) unchanged
 - Ran prerequisites check, installed, and let the VM reboot into its new role
 - Verified the promotion by logging in as Domain Admin
+<img width="1920" height="1011" alt="RRL SCREENSHOT" src="https://github.com/user-attachments/assets/2b9aa952-f0f2-4e47-9a94-fbf3c08a7034" />
+
 
 ## 2. OU Structure — Branch-Based Design
 
