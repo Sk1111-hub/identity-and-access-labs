@@ -28,6 +28,7 @@ rrl.local
 - Created a test user, **Wanele Xulu** (`wxulu`), inside `Staging` to move through the full lifecycle
 - Verified all OUs nested correctly in Active Directory Users and Computers
 
+
 ## 2. Shared Resource Setup
 
 Set up the resource the onboarding policy would provision access to:
@@ -35,6 +36,9 @@ Set up the resource the onboarding policy would provision access to:
 - Created a folder `C:\CompanyShare` on the DC
 - Added an Acceptable Use Policy (AUP) document inside it
 - Shared the folder via **Properties → Sharing → Advanced Sharing**, setting share permissions to **Read-only for Authenticated Users**
+<img width="1359" height="724" alt="Permissions CompanyShare" src="https://github.com/user-attachments/assets/324b5375-d0c7-43b8-a8f6-ae3abffa5e37" />
+
+
 
 ## 3. Onboarding GPO
 
@@ -68,6 +72,9 @@ Get-ADUser -Identity wxulu | Move-ADObject -TargetPath "OU=IT,OU=Active Users,DC
 - Pipes the user object from `Get-ADUser` directly into `Move-ADObject`, moving `wxulu` from `Staging` into `IT` under `Active Users`
 - Verified in Active Directory Users and Computers: `wxulu` no longer appeared in `Staging` and was now listed under `Active Users → IT`
 - Leaving `Staging` also means the onboarding GPO (scoped only to that OU) no longer applies to this account
+<img width="1367" height="707" alt="User moved from staging" src="https://github.com/user-attachments/assets/eeb27569-dc4b-4e6b-830c-1aa4ef2ab24b" />
+<img width="1364" height="714" alt="Verification user activated" src="https://github.com/user-attachments/assets/0a057102-6900-402b-a040-83fe4fb3285e" />
+
 
 ## 5. Offboarding GPO
 
@@ -81,6 +88,7 @@ Built to strip a disabled account of effectively all access, not just disable lo
   - **Deny log on through Remote Desktop Services**
 
 Stacking all three closes the main paths a disabled-but-not-yet-deleted account could still be used through — local console, network share access, and RDP — rather than relying on `Disable-ADAccount` alone.
+<img width="1363" height="707" alt="All 3 configured" src="https://github.com/user-attachments/assets/1335fa44-f821-4222-9903-e8f1caaba6e3" />
 
 ## 6. Offboarding the Test User
 
@@ -91,6 +99,8 @@ Move-ADObject -Identity (Get-ADUser wxulu).DistinguishedName -TargetPath "OU=Dis
 
 - Disables the account first, then moves it into `Disabled Users`, where the offboarding GPO's deny rights take effect
 - Verified in Active Directory Users and Computers: `wxulu` moved out of `Active Users → IT` and into `Disabled Users`
+<img width="1363" height="710" alt="Offboarding confirmation" src="https://github.com/user-attachments/assets/681613c4-6724-48b8-b97d-087faf0681b2" />
+
 
 ## 7. Proving the Policies Actually Applied
 
